@@ -82,3 +82,26 @@ function performCalculation() {
             alert("Please select a valid equation.");
     }
 }
+function saveInputValues() {
+    localStorage.setItem('graphTitle', document.getElementById('graph-title').value);
+    localStorage.setItem('xStart', document.getElementById('x-start').value);
+    localStorage.setItem('yStart', document.getElementById('y-start').value);
+    localStorage.setItem('xValues', document.getElementById('x-values').value);
+    localStorage.setItem('yValues', document.getElementById('y-values').value);
+    localStorage.setItem('xLabel', document.getElementById('x-label').value);
+    localStorage.setItem('yLabel', document.getElementById('y-label').value);
+}
+
+function loadInputValues() {
+    document.getElementById('graph-title').value = localStorage.getItem('graphTitle') || '';
+    document.getElementById('x-start').value = localStorage.getItem('xStart') || '0';
+    document.getElementById('y-start').value = localStorage.getItem('yStart') || '0';
+    document.getElementById('x-values').value = localStorage.getItem('xValues') || '';
+    document.getElementById('y-values').value = localStorage.getItem('yValues') || '';
+    document.getElementById('x-label').value = localStorage.getItem('xLabel') || '';
+    document.getElementById('y-label').value = localStorage.getItem('yLabel') || '';
+}
+
+window.onload = loadInputValues;
+window.onbeforeunload = saveInputValues;
+
