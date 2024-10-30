@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projectile Motion Calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Projectile Motion Calculator</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="linearmotion.html">Linear Motion</a></li>
+                <li><a href="graph.html">Graph</a></li>
+                <li><a href="image-solver.html">Image Solver</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="projectile-motion">
+            <h2>Projectile Motion Calculations</h2>
+            <p>Calculate detailed projectile motion parameters.</p>
+
+            <label for="case">Select Projectile Case:</label>
+            <select id="case" onchange="updateFields()">
+                <option value="ground">Launched from Ground</option>
+                <option value="elevated">Launched from Elevated Height</option>
+                <option value="horizontal">Launched Horizontally from Height</option>
+            </select>
+
+            <label for="initial-velocity">Initial Velocity (v₀ in m/s):</label>
+            <input type="number" id="initial-velocity" placeholder="Initial velocity (v₀)">
+
+            <label for="angle">Launch Angle (θ in degrees):</label>
+            <input type="number" id="angle" placeholder="Launch angle (θ)" value="45">
+
+            <label for="height">Initial Height (h₀ in meters):</label>
+            <input type="number" id="height" placeholder="Initial height (h₀)" value="0">
+
+            <label for="gravity">Gravity (g in m/s²):</label>
+            <input type="number" id="gravity" placeholder="Gravity (9.81 by default)" value="9.81">
+
+            <label for="equation">Select Equation:</label>
+            <select id="equation" onchange="displayEquation()">
+                <option value="default">Select an equation</option>
+                <option value="time_of_flight">Time of Flight</option>
+                <option value="range">Range</option>
+                <option value="max_height">Maximum Height</option>
+            </select>
+
+            <button onclick="calculateProjectileMotion()">Calculate</button>
+            <button onclick="clearInputs()">Clear</button>
+
+            <h3>Results</h3>
+            <p>Horizontal Velocity: <span id="horizontal-velocity">0</span> m/s</p>
+            <p>Vertical Velocity: <span id="vertical-velocity">0</span> m/s</p>
+            <p>Total Time of Flight: <span id="time-of-flight">0</span> s</p>
+            <p>Time to Maximum Height: <span id="time-to-max-height">0</span> s</p>
+            <p>Maximum Height: <span id="max-height">0</span> meters</p>
+            <p>Range: <span id="range">0</span> meters</p>
+
+            <h3>Calculations</h3>
+            <div id="calculations"></div>
+        </section>
+    </main>
+
+    <script>
+        function updateFields() {
+            const caseType = document.getElementById('case').value;
+            const angleInput = document.getElementById('angle');
+
+            angleInput.disabled = (caseType === "horizontal");
+            angleInput.value = (caseType === "horizontal") ? 0 : 45; // Set to 0 for horizontal, default to 45 otherwise
+        }
+
+        function displayEquation() {
+            const equationType = document.getElementById('equation').value;
+            const calculationsDiv = document.getElementById('calculations');
+            calculationsDiv.innerHTML = ""; // Clear previous calculations
+
+            const equations = {
+                time_of_flight: "T = \\( \\frac{v_0 \\sin(θ) + \\sqrt{(v_0 \\sin(θ))^2 + 2gh_0}}{g} \\)",
+                range: "R = \\( v_0 \\cos(θ) \\times T \\)",
+                max_height: "H = \\( h_0 + \\frac{(v_0 \\sin(θ))^2}{2g} \\)"
+            };
+
+            if (equations[equationType]) {
+                calculationsDiv.innerHTML = "<p>Equation: " + equations[equationType] + "</p>";
+            }
+        }
+
+        function calculateProjectileMotion() {
+            // Your calculation logic...
+        }
+
+        function clearInputs() {
+            // Your clear logic...
+        }
+    </script>
+</body>
+</html>

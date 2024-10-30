@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THE RUBRYSICS</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Base styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4; /* Fallback background color */
+            background-image: url('images/background.jpg'); /* Path to your background image */
+            background-size: cover; /* Make the background cover the entire body */
+            background-repeat: no-repeat; /* Prevent background image from repeating */
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        nav ul li {
+            display: inline;
+            margin: 0 10px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #1e88e5;
+        }
+
+        h1 {
+            color: white;
+        }
+        
+        h2 {
+            color: #1e88e5;
+        }
+
+        #choices {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        button {
+            margin: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #1e88e5;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0d6efd;
+        }
+
+        .info-section {
+            display: none;
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #1e88e5;
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+
+        .video-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .video-wrapper {
+            position: relative;
+            width: 100%;
+            padding-top: 56.25%; /* 16:9 aspect ratio */
+            margin: 10px;
+        }
+
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px; /* Optional: add some rounded corners */
+        }
+
+        /* Responsive styles */
+        @media (min-width: 768px) {
+            .video-wrapper {
+                width: calc(50% - 20px);
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .video-wrapper {
+                width: calc(33.33% - 20px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>THE RUBRYSICS</h1>
+        <nav>
+            <ul>
+                <li><a href="linearmotion.html">Linear Motion</a></li>
+                <li><a href="projectilemotion.html">Projectile Motion</a></li>
+                <li><a href="graph.html">Graph</a></li>
+                <li><a href="image-solver.html">Image Solver</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="choices">
+            <h2>Select a Physics Topic</h2>
+            <button onclick="window.location.href='linearmotion.html'">Linear Motion</button>
+            <button onclick="window.location.href='projectilemotion.html'">Projectile Motion</button>
+            <button onclick="window.location.href='graph.html'">Graph</button>
+        </section>
+
+        <!-- Linear Motion Info Section -->
+        <section>
+            <h2 onclick="toggleInfo('linear-motion-info')" style="cursor: pointer;">Linear Motion Info</h2>
+            <div id="linear-motion-info" class="info-section">
+                <p>Linear motion refers to the movement of an object in a straight line. It is described by the following equations:</p>
+                <ul>
+                    <li><strong>1. Distance (s) = Speed (v) × Time (t)</strong> 
+                        <p>This equation calculates the distance traveled when speed and time are known.</p>
+                    </li>
+                    <li><strong>2. Final Velocity (v) = Initial Velocity (u) + Acceleration (a) × Time (t)</strong>
+                        <p>This equation is used to determine the final velocity of an object based on its initial velocity, acceleration, and time.</p>
+                    </li>
+                    <li><strong>3. Distance (s) = Initial Velocity (u) × Time (t) + (1/2) × Acceleration (a) × Time² (t²)</strong>
+                        <p>This equation calculates the total distance traveled when an object is accelerating.</p>
+                    </li>
+                    <li><strong>4. Final Velocity² (v²) = Initial Velocity² (u²) + 2 × Acceleration (a) × Distance (s)</strong>
+                        <p>This equation relates the final velocity of an object to its initial velocity, acceleration, and distance traveled.</p>
+                    </li>
+                </ul>
+                <h3>Key Concepts:</h3>
+                <ul>
+                    <li><strong>Uniform Motion:</strong> When an object moves with a constant speed in a straight line.</li>
+                    <li><strong>Acceleration:</strong> The rate of change of velocity per unit time.</li>
+                    <li><strong>Deceleration:</strong> Negative acceleration, where an object slows down.</li>
+                </ul>
+                <h3>Linear Motion Video Explanations</h3>
+                <div class="video-container">
+                    <div class="video-wrapper">
+                        <iframe src="https://www.youtube.com/embed/3sjZvtKMMsM" title="Linear Motion Explanation" allowfullscreen></iframe>
+                    </div>
+                    <div class="video-wrapper">
+                        <iframe src="https://www.youtube.com/embed/j1ErIiGqwGg" title="Another Linear Motion Explanation" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projectile Motion Info Section -->
+        <section>
+            <h2 onclick="toggleInfo('projectile-motion-info')" style="cursor: pointer;">Projectile Motion Info</h2>
+            <div id="projectile-motion-info" class="info-section">
+                <p>Projectile motion refers to the motion of an object that is projected into the air and is influenced by gravity. The object follows a curved path known as a trajectory. The motion can be analyzed in two dimensions: horizontal and vertical.</p>
+                
+                <h3>Key Equations:</h3>
+                <ul>
+                    <li><strong>1. Horizontal Range (R):</strong> 
+                        <p>R = (v<sub>0</sub>² * sin(2θ)) / g</p>
+                        <p>This equation calculates the horizontal range of the projectile, where v<sub>0</sub> is the initial velocity, θ is the launch angle, and g is the acceleration due to gravity.</p>
+                    </li>
+                    <li><strong>2. Maximum Height (H):</strong> 
+                        <p>H = (v<sub>0</sub>² * sin²(θ)) / (2g)</p>
+                        <p>This equation gives the maximum height reached by the projectile.</p>
+                    </li>
+                    <li><strong>3. Time of Flight (T):</strong>
+                        <p>T = (2 * v<sub>0</sub> * sin(θ)) / g</p>
+                        <p>This equation calculates the total time the projectile is in the air.</p>
+                    </li>
+                    <li><strong>4. Vertical Displacement (y):</strong>
+                        <p>y = v<sub>0</sub> * sin(θ) * t - (1/2) * g * t²</p>
+                        <p>This equation describes the vertical displacement of the projectile at any time t.</p>
+                    </li>
+                </ul>
+
+                <h3>Key Concepts:</h3>
+                <ul>
+                    <li><strong>Trajectory:</strong> The path followed by a projectile, which is parabolic in shape.</li>
+                    <li><strong>Launch Angle:</strong> The angle at which the projectile is launched, significantly affecting its range and height.</li>
+                    <li><strong>Gravity:</strong> The force acting downwards, causing the projectile to follow a curved path.</li>
+                </ul>
+                
+                <h3>Projectile Motion Video Explanations</h3>
+                <div class="video-container">
+                    <div class="video-wrapper">
+                        <iframe src="https://www.youtube.com/embed/Mp8bz5P1m4I" title="Projectile Motion Explanation 1" allowfullscreen></iframe>
+                    </div>
+                    <div class="video-wrapper">
+                        <iframe src="https://www.youtube.com/embed/TQSvfrSJucI" title="Projectile Motion Explanation 2" allowfullscreen></iframe>
+                    </div>
+                    <div class="video-wrapper">
+                        <iframe src="https://www.youtube.com/embed/wD2qITZ6w8A" title="Additional Linear Motion Explanation" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        function toggleInfo(infoId) {
+            const info = document.getElementById(infoId);
+            info.style.display = info.style.display === 'none' || info.style.display === '' ? 'block' : 'none';
+        }
+    </script>
+</body>
+</html>

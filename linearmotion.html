@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linear Motion Calculator</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            margin: 0;
+            padding: 20px;
+            background-color: #e3f2fd;
+        }
+        header {
+            background-color: #1e88e5;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+            border-bottom: 3px solid #0d47a1;
+        }
+        main {
+            padding: 20px;
+        }
+        section {
+            background-color: white;
+            margin: 10px 0;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        h2 { color: #333; }
+        label { display: block; margin: 10px 0 5px; }
+        input, select {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #1e88e5;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #ff9800;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+        button:hover { background-color: #ef6c00; }
+        #result-display { margin-top: 20px; }
+        #result-display p { font-weight: bold; }
+        #equation-suggestions { margin-top: 15px; padding: 10px; background-color: #f0f8ff; border: 1px solid #1e88e5; border-radius: 5px; }
+        #calculation-steps { margin-top: 15px; padding: 10px; background-color: #fff3e0; border: 1px solid #ff9800; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Linear Motion Calculator</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="projectilemotion.html">Projectile Motion</a></li>
+                <li><a href="graph.html">Graph</a></li>
+                <li><a href="image-solver.html">Image Solver</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="linear-motion">
+            <h2>Calculate Linear Motion Parameters</h2>
+            <p>Select a calculation to perform:</p>
+
+            <label for="calculation-type">Choose calculation:</label>
+            <select id="calculation-type" onchange="updateEquations()">
+                <option value="displacement">Displacement (s)</option>
+                <option value="final-velocity">Final Velocity (v)</option>
+                <option value="initial-velocity">Initial Velocity (u)</option>
+                <option value="acceleration">Acceleration (a)</option>
+                <option value="time">Time (t)</option>
+            </select>
+
+            <div id="equation-suggestions">
+                <h3>Suggested Equations:</h3>
+                <select id="equation-select" onchange="updateSelectedEquation()">
+                    <option value="">Select an equation</option>
+                </select>
+                <p id="suggestions">Select a calculation to see suggestions.</p>
+            </div>
+
+            <div id="inputs">
+                <label for="initial-velocity">Initial Velocity (u):</label>
+                <input type="number" id="initial-velocity" placeholder="Initial velocity (u)" required>
+
+                <label for="final-velocity">Final Velocity (v):</label>
+                <input type="number" id="final-velocity" placeholder="Final velocity (v)" required>
+
+                <label for="acceleration">Acceleration (a):</label>
+                <input type="number" id="acceleration" placeholder="Acceleration (a)" required>
+
+                <label for="time">Time (t):</label>
+                <input type="number" id="time" placeholder="Time (t)" required>
+
+                <label for="displacement">Displacement (s):</label>
+                <input type="number" id="displacement" placeholder="Displacement (s)" required>
+            </div>
+
+            <button onclick="performCalculation()">Calculate</button>
+            <button onclick="clearAll()">Clear</button>
+
+            <h3>Results:</h3>
+            <div id="result-display">
+                <p>Displacement (s): <span id="displacement-result">N/A</span></p>
+                <p>Final Velocity (v): <span id="final-velocity-result">N/A</span></p>
+                <p>Initial Velocity (u): <span id="initial-velocity-result">N/A</span></p>
+                <p>Acceleration (a): <span id="acceleration-result">N/A</span></p>
+                <p>Time (t): <span id="time-result">N/A</span></p>
+            </div>
+
+            <h3>Calculation Steps:</h3>
+            <div id="calculation-steps">
+                <p id="steps-display">No calculations performed yet.</p>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        let selectedEquation = '';
+
+        function updateEquations() {
+            const type = document.getElementById('calculation-type').value;
+            const suggestions = document.getElementById('suggestions');
+            const equationSelect = document.getElementById('equation-select');
+
+            equationSelect.innerHTML = '<option value="">Select an equation</option>';
+
+            switch (type) {
+                case 'displacement':
+                    suggestions.innerHTML = `Use the equations: <br>
+                        1. s = ut + (1/2)at² <br>
+                        2. s = vt - (1/2)at² <br>
+                        3. s = (u + v)/2 * t`;
+                    equationSelect.innerHTML += `
+                        <option value="s1">s = ut + (1/2)at²</option>
+                        <option value="s2">s = vt - (1/2)at²</option>
+                        <option value="s3">s = (u + v)/2 * t</option>`;
+                    break;
+                case 'final-velocity':
+                    suggestions.innerHTML = `Use the equations: <br>
+                        1. v = u + at <br>
+                        2. v² = u² + 2as <br>
+                        3. v = s/t + u`;
+                    equationSelect.innerHTML += `
+                        <option value="v1">v = u + at</option>
+                        <option value="v2">v² = u² + 2as</option>
+                        <option value="v3">v = s/t + u</option>`;
+                    break;
+                case 'initial-velocity':
+                    suggestions.innerHTML = `Use the equations: <br>
+                        1. u = (s - (1/2)at²) / t <br>
+                        2. u = v - at <br>
+                        3. u = s/t - (1/2)at`;
+                    equationSelect.innerHTML += `
+                        <option value="u1">u = (s - (1/2)at²) / t</option>
+                        <option value="u2">u = v - at</option>
+                        <option value="u3">u = s/t - (1/2)at</option>`;
+                    break;
+                case 'acceleration':
+                    suggestions.innerHTML = `Use the equations: <br>
+                        1. a = (s - ut) / (1/2)t² <br>
+                        2. a = (v - u) / t <br>
+                        3. a = (v² - u²) / (2s)`;
+                    equationSelect.innerHTML += `
+                        <option value="a1">a = (s - ut) / (1/2)t²</option>
+                        <option value="a2">a = (v - u) / t</option>
+                        <option value="a3">a = (v² - u²) / (2s)</option>`;
+                    break;
+                case 'time':
+                    suggestions.innerHTML = `Use the equations: <br>
+                        1. t = (v - u) / a <br>
+                        2. t = (2s) / (u + v) <br>
+                        3. t = √((2s) / a)`;
+                    equationSelect.innerHTML += `
+                        <option value="t1">t = (v - u) / a</option>
+                        <option value="t2">t = (2s) / (u + v)</option>
+                        <option value="t3">t = √((2s) / a)</option>`;
+                    break;
+            }
+        }
+
+        function updateSelectedEquation() {
+            selectedEquation = document.getElementById('equation-select').value;
+        }
+
+        function performCalculation() {
+            const u = parseFloat(document.getElementById('initial-velocity').value) || 0;
+            const v = parseFloat(document.getElementById('final-velocity').value) || 0;
+            const a = parseFloat(document.getElementById('acceleration').value) || 0;
+            const t = parseFloat(document.getElementById('time').value) || 0;
+            const s = parseFloat(document.getElementById('displacement').value) || 0;
+
+            const results = {
+                displacement: 'N/A',
+                finalVelocity: 'N/A',
+                initialVelocity: 'N/A',
+                acceleration: 'N/A',
+                time: 'N/A',
+                steps: ''
+            };
+
+            if (!selectedEquation) {
+                alert('Please select an equation to perform the calculation.');
+                return;
+            }
+
+            switch (selectedEquation) {
+                case 's1': // s = ut + (1/2)at²
+                    results.displacement = (u * t + 0.5 * a * t * t).toFixed(2);
+                    results.steps += `s = ut + (1/2)at² = ${u} * ${t} + 0.5 * ${a} * ${t}² = ${results.displacement} <br>`;
+                    break;
+                case 's2': // s = vt - (1/2)at²
+                    results.displacement = (v * t - 0.5 * a * t * t).toFixed(2);
+                    results.steps += `s = vt - (1/2)at² = ${v} * ${t} - 0.5 * ${a} * ${t}² = ${results.displacement} <br>`;
+                    break;
+                case 's3': // s = (u + v)/2 * t
+                    results.displacement = ((u + v) / 2 * t).toFixed(2);
+                    results.steps += `s = (u + v)/2 * t = (${u} + ${v})/2 * ${t} = ${results.displacement} <br>`;
+                    break;
+                case 'v1': // v = u + at
+                    results.finalVelocity = (u + a * t).toFixed(2);
+                    results.steps += `v = u + at = ${u} + ${a} * ${t} = ${results.finalVelocity} <br>`;
+                    break;
+                case 'v2': // v² = u² + 2as
+                    results.finalVelocity = Math.sqrt(u * u + 2 * a * s).toFixed(2);
+                    results.steps += `v = √(u² + 2as) = √(${u}² + 2 * ${a} * ${s}) = ${results.finalVelocity} <br>`;
+                    break;
+                case 'v3': // v = s/t + u
+                    results.finalVelocity = (s / t + u).toFixed(2);
+                    results.steps += `v = s/t + u = ${s}/${t} + ${u} = ${results.finalVelocity} <br>`;
+                    break;
+                case 'u1': // u = (s - (1/2)at²) / t
+                    results.initialVelocity = ((s - 0.5 * a * t * t) / t).toFixed(2);
+                    results.steps += `u = (s - (1/2)at²) / t = (${s} - 0.5 * ${a} * ${t}²) / ${t} = ${results.initialVelocity} <br>`;
+                    break;
+                case 'u2': // u = v - at
+                    results.initialVelocity = (v - a * t).toFixed(2);
+                    results.steps += `u = v - at = ${v} - ${a} * ${t} = ${results.initialVelocity} <br>`;
+                    break;
+                case 'u3': // u = s/t - (1/2)at
+                    results.initialVelocity = (s / t - 0.5 * a * t).toFixed(2);
+                    results.steps += `u = s/t - (1/2)at = ${s}/${t} - 0.5 * ${a} * ${t} = ${results.initialVelocity} <br>`;
+                    break;
+                case 'a1': // a = (s - ut) / (1/2)t²
+                    results.acceleration = ((s - u * t) / (0.5 * t * t)).toFixed(2);
+                    results.steps += `a = (s - ut) / (1/2)t² = (${s} - ${u} * ${t}) / (0.5 * ${t}²) = ${results.acceleration} <br>`;
+                    break;
+                case 'a2': // a = (v - u) / t
+                    results.acceleration = ((v - u) / t).toFixed(2);
+                    results.steps += `a = (v - u) / t = (${v} - ${u}) / ${t} = ${results.acceleration} <br>`;
+                    break;
+                case 'a3': // a = (v² - u²) / (2s)
+                    results.acceleration = ((v * v - u * u) / (2 * s)).toFixed(2);
+                    results.steps += `a = (v² - u²) / (2s) = (${v}² - ${u}²) / (2 * ${s}) = ${results.acceleration} <br>`;
+                    break;
+                case 't1': // t = (v - u) / a
+                    results.time = ((v - u) / a).toFixed(2);
+                    results.steps += `t = (v - u) / a = (${v} - ${u}) / ${a} = ${results.time} <br>`;
+                    break;
+                case 't2': // t = (2s) / (u + v)
+                    results.time = ((2 * s) / (u + v)).toFixed(2);
+                    results.steps += `t = (2s) / (u + v) = (2 * ${s}) / (${u} + ${v}) = ${results.time} <br>`;
+                    break;
+                case 't3': // t = √((2s) / a)
+                    results.time = Math.sqrt((2 * s) / a).toFixed(2);
+                    results.steps += `t = √((2s) / a) = √((2 * ${s}) / ${a}) = ${results.time} <br>`;
+                    break;
+            }
+
+            document.getElementById('displacement-result').textContent = results.displacement;
+            document.getElementById('final-velocity-result').textContent = results.finalVelocity;
+            document.getElementById('initial-velocity-result').textContent = results.initialVelocity;
+            document.getElementById('acceleration-result').textContent = results.acceleration;
+            document.getElementById('time-result').textContent = results.time;
+            document.getElementById('steps-display').innerHTML = results.steps || 'No calculations performed yet.';
+        }
+
+        function clearAll() {
+            document.getElementById('initial-velocity').value = '';
+            document.getElementById('final-velocity').value = '';
+            document.getElementById('acceleration').value = '';
+            document.getElementById('time').value = '';
+            document.getElementById('displacement').value = '';
+            document.getElementById('displacement-result').textContent = 'N/A';
+            document.getElementById('final-velocity-result').textContent = 'N/A';
+            document.getElementById('initial-velocity-result').textContent = 'N/A';
+            document.getElementById('acceleration-result').textContent = 'N/A';
+            document.getElementById('time-result').textContent = 'N/A';
+            document.getElementById('steps-display').innerHTML = 'No calculations performed yet.';
+        }
+    </script>
+</body>
+</html>
