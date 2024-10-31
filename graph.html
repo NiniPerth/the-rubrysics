@@ -30,6 +30,19 @@
             max-width: 900px; 
             height: auto; 
         }
+
+        /* Mobile adjustments */
+        @media (max-width: 600px) {
+            input[type="text"], input[type="number"] {
+                width: 100%; /* Full width for inputs */
+                margin-bottom: 10px; /* Space between inputs */
+            }
+
+            button {
+                width: 100%; /* Full width for buttons */
+                margin-bottom: 10px; /* Space below buttons */
+            }
+        }
     </style>
 </head>
 <body>
@@ -274,7 +287,5 @@
         document.getElementById('gradient-display').innerHTML = '';
     }
 	</script>
-
-
 </body>
 </html>
