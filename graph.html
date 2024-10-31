@@ -71,8 +71,8 @@
             <label for="y-label">Y-axis Label (symbol and unit):</label>
             <input type="text" id="y-label" placeholder="e.g., Distance (m)">
 
-            <button onclick="plotGraph()">Plot Graph</button>
-            <button onclick="clearGraph()">Clear</button>
+            <button onclick="plotGraph(event)">Plot Graph</button>
+            <button onclick="clearGraph(event)">Clear</button>
 
             <div class="centroid-display" id="centroid-display"></div>
             <div class="gradient-display" id="gradient-display"></div>
@@ -179,7 +179,9 @@
         return slope;
     }
 
-    function plotGraph() {
+    function plotGraph(event) {
+        event.preventDefault();  // Prevent page refresh
+
         let xStart = parseFloat(document.getElementById('x-start').value);
         let yStart = parseFloat(document.getElementById('y-start').value);
         let xValues = document.getElementById('x-values').value.split(',').map(Number);
@@ -246,22 +248,23 @@
         // Display centroid and gradient information
         const centroidDisplay = document.getElementById('centroid-display');
         centroidDisplay.innerHTML = 
-            Centroid Calculation:<br>
+            `Centroid Calculation:<br>
             Cx = Σx / n = ${sumX} / ${xValues.length} = ${centroidX.toFixed(2)}<br>
             Cy = Σy / n = ${sumY} / ${yValues.length} = ${centroidY.toFixed(2)}<br>
-        ;
+        `;
 
         const gradientDisplay = document.getElementById('gradient-display');
         gradientDisplay.innerHTML = 
-            Gradient (Slope): ${slope.toFixed(2)}<br>
+            `Gradient (Slope): ${slope.toFixed(2)}<br>
             Best Fit Line:<br>
             y = ${slope.toFixed(2)}x + ${intercept.toFixed(2)}<br>
             Line touches Y-axis at: (0, ${intercept.toFixed(2)})<br>
             Line touches X-axis at: (${(-intercept/slope).toFixed(2)}, 0)<br>
-        ;
+        `;
     }
 
-    function clearGraph() {
+    function clearGraph(event) {
+        event.preventDefault();  // Prevent page refresh
         document.getElementById('graph-title').value = '';
         document.getElementById('x-values').value = '';
         document.getElementById('y-values').value = '';
@@ -273,6 +276,6 @@
         document.getElementById('centroid-display').innerHTML = '';
         document.getElementById('gradient-display').innerHTML = '';
     }
-	</script>
+    </script>
 </body>
 </html>
