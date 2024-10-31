@@ -246,19 +246,19 @@
         // Display centroid and gradient information
         const centroidDisplay = document.getElementById('centroid-display');
         centroidDisplay.innerHTML = 
-            `Centroid Calculation:<br>
+            Centroid Calculation:<br>
             Cx = Σx / n = ${sumX} / ${xValues.length} = ${centroidX.toFixed(2)}<br>
             Cy = Σy / n = ${sumY} / ${yValues.length} = ${centroidY.toFixed(2)}<br>
-        `;
+        ;
 
         const gradientDisplay = document.getElementById('gradient-display');
         gradientDisplay.innerHTML = 
-            `Gradient (Slope): ${slope.toFixed(2)}<br>
+            Gradient (Slope): ${slope.toFixed(2)}<br>
             Best Fit Line:<br>
             y = ${slope.toFixed(2)}x + ${intercept.toFixed(2)}<br>
             Line touches Y-axis at: (0, ${intercept.toFixed(2)})<br>
             Line touches X-axis at: (${(-intercept/slope).toFixed(2)}, 0)<br>
-        `;
+        ;
     }
 
     function clearGraph() {
