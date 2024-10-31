@@ -30,19 +30,6 @@
             max-width: 900px; 
             height: auto; 
         }
-
-        /* Mobile adjustments */
-        @media (max-width: 600px) {
-            input[type="text"], input[type="number"] {
-                width: 100%; /* Full width for inputs */
-                margin-bottom: 10px; /* Space between inputs */
-            }
-
-            button {
-                width: 100%; /* Full width for buttons */
-                margin-bottom: 10px; /* Space below buttons */
-            }
-        }
     </style>
 </head>
 <body>
@@ -99,17 +86,10 @@
     const canvas = document.getElementById('plot');
     const ctx = canvas.getContext('2d');
 
-    let resizeTimeout;
-
     function resizeCanvas() {
-        if (resizeTimeout) {
-            clearTimeout(resizeTimeout);
-        }
-        resizeTimeout = setTimeout(() => {
-            canvas.width = canvas.clientWidth;
-            canvas.height = canvas.clientWidth * (600 / 900); 
-            clearGraph(); 
-        }, 300);
+        canvas.width = canvas.clientWidth;
+        canvas.height = canvas.clientWidth * (600 / 900); 
+        clearGraph(); 
     }
 
     window.addEventListener('resize', resizeCanvas);
@@ -293,6 +273,6 @@
         document.getElementById('centroid-display').innerHTML = '';
         document.getElementById('gradient-display').innerHTML = '';
     }
-    </script>
+	</script>
 </body>
 </html>
